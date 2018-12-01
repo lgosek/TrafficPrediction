@@ -10,7 +10,7 @@ GRIDLEN = 150
 #Czas symulacji
 TIME = 500
 #Liczba samochodów
-CARNUM = 30
+CARNUM = 5
 
 p = 0.2
 
@@ -26,6 +26,7 @@ class Model:
 
         self.fig, self.ax = plt.subplots()
         self.x = np.arange(0, GRIDLEN, 1)
+
         self.line, = self.ax.plot(self.x, self.printGrid(), marker='.')
         self.ani = animation.FuncAnimation(
             self.fig, self.animate, init_func=self.init_plot,  interval=500, blit=False, save_count=50)
@@ -72,6 +73,7 @@ class Model:
         return self.line,
 
     def start(self):
+        plt.xlim((0, GRIDLEN))
         plt.show()
 
 
