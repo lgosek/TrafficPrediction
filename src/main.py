@@ -16,8 +16,10 @@ LANES = 2
 #Maksymalna prędkość
 MAXVEL = 5
 
-#Wyroznione id
-HIGHLIGHT_ID = random.randint(0, CARNUM);
+#liczba wyroznionych samochodow
+HIGHLIGHTED = 3;
+
+
 
 p = 0.15
 PCHANGE = 0.8
@@ -43,7 +45,9 @@ class Model:
         self.fig, self.ax = plt.subplots()
         self.x = np.arange(0, GRIDLEN, 1)
 
+        self.highlightID = [random.randint(0, CARNUM-1) for i in range(HIGHLIGHTED)];
         grd = self.printGrid()
+
 
 
         # self.line0 = self.ax.plot(self.x, grd[0], marker='.', linestyle='', color='b')[0]
@@ -71,7 +75,7 @@ class Model:
         grid = [[None for i in range(0, GRIDLEN)] for j in range(LANES+1)]
         for j,lane in enumerate(self.traffic):
             for car in lane:
-                if car.id == HIGHLIGHT_ID:
+                if car.id in self.highlightID:
                     grid[2][car.posX - 1] = car.posY
                 else:
                     grid[j][car.posX - 1] = car.posY
