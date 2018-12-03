@@ -17,7 +17,7 @@ LANES = 2
 MAXVEL = 5
 
 #liczba wyroznionych samochodow
-HIGHLIGHTED = 3;
+HIGHLIGHTED = 40;
 
 
 
@@ -45,7 +45,7 @@ class Model:
         self.fig, self.ax = plt.subplots()
         self.x = np.arange(0, GRIDLEN, 1)
 
-        self.highlightID = [random.randint(0, CARNUM-1) for i in range(HIGHLIGHTED)];
+        self.highlightID = random.sample(range(0, CARNUM), HIGHLIGHTED)
         grd = self.printGrid()
 
 
