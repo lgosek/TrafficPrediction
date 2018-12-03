@@ -10,11 +10,14 @@ GRIDLEN = 150
 #Czas symulacji
 TIME = 500
 #Liczba samochodów
-CARNUM = 20
+CARNUM = 40
 #Liczba pasów ruchu
 LANES = 2
 #Maksymalna prędkość
 MAXVEL = 5
+
+#Wyroznione id
+HIGHLIGHT_ID = random.randint(0, CARNUM);
 
 p = 0.15
 PCHANGE = 0.8
@@ -28,7 +31,7 @@ class Model:
         #numRight = round(random.random()*CARNUM)
         # traffic[0] - prawy pas, traffic[1] - lewy pas
         #self.traffic = [[Cars.Car(GRIDLEN, 0) for i in range(0, numRight)], [Cars.Car(GRIDLEN, 1) for i in range(0, CARNUM-numRight)]]
-        self.traffic = [ [Cars.Car(GRIDLEN, j) for i in range(0, CARNUM)]  for j in range(LANES) ]
+        self.traffic = [ [Cars.Car(GRIDLEN, j, j*round(CARNUM/2)+i) for i in range(0, round(CARNUM/2))]  for j in range(LANES) ]
         #self.traffic = [Cars.Car(GRIDLEN, 0) for i in range(0, CARNUM)]
         # ułożenie samochodów na siatce rosnąco względem posX
         for i in range (LANES):
@@ -41,9 +44,15 @@ class Model:
         self.x = np.arange(0, GRIDLEN, 1)
 
         grd = self.printGrid()
+
+
         # self.line0 = self.ax.plot(self.x, grd[0], marker='.', linestyle='', color='b')[0]
         # self.line1 = self.ax.plot(self.x, grd[1], marker='.', linestyle='', color='b')[0]
+
         self.lines = [self.ax.plot(self.x, grd[i], marker='.', linestyle='', color='b')[0] for i in range(LANES)]
+        self.lines.append(self.ax.plot(self.x, grd[2], marker='.', linestyle='', color='r')[0])
+
+
         self.ani = animation.FuncAnimation(
             self.fig, self.animate, init_func=self.init_plot,  interval=500, blit=False, save_count=50)
 
@@ -59,12 +68,17 @@ class Model:
         car.currentVel = max(vtemp-1, 0) if random.random()<p else vtemp
 
     def printGrid(self):
-        grid = [[None for i in range(0, GRIDLEN)] for j in range(LANES)]
+        grid = [[None for i in range(0, GRIDLEN)] for j in range(LANES+1)]
         for j,lane in enumerate(self.traffic):
             for car in lane:
-                grid[j][car.posX - 1] = car.posY
+                if car.id == HIGHLIGHT_ID:
+                    grid[2][car.posX - 1] = car.posY
+                else:
+                    grid[j][car.posX - 1] = car.posY
             # grid[0][car.posX - 1] = car.posY
             # grid[1][car.posX - 1] = car.posY+1
+        #grid = [list(map(lambda x: None if x== HIGHLIGHT_ID else (0 if x is not None else None), grid[0])),
+        #        list(map(lambda x: None if x == HIGHLIGHT_ID else (1 if x is not None else None), grid[1]))]
         return grid
 
     def findNearest(self, destLane, posX):
@@ -158,7 +172,7 @@ class Model:
         ret = self.runSim()
         # self.line0.set_ydata(ret[0])  # update the data.
         # self.line1.set_ydata(ret[1])
-        for i in range(LANES):
+        for i in range(LANES+1):
             self.lines[i].set_ydata(ret[i])
         return self.lines
 
