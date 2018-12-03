@@ -12,12 +12,12 @@ TIME = 500
 #Liczba samochodów
 CARNUM = 40
 #Liczba pasów ruchu
-LANES = 2
+LANES = 1
 #Maksymalna prędkość
 MAXVEL = 5
 
 #liczba wyroznionych samochodow
-HIGHLIGHTED = 40;
+HIGHLIGHTED = 1;
 
 
 
@@ -33,7 +33,7 @@ class Model:
         #numRight = round(random.random()*CARNUM)
         # traffic[0] - prawy pas, traffic[1] - lewy pas
         #self.traffic = [[Cars.Car(GRIDLEN, 0) for i in range(0, numRight)], [Cars.Car(GRIDLEN, 1) for i in range(0, CARNUM-numRight)]]
-        self.traffic = [ [Cars.Car(GRIDLEN, j, j*round(CARNUM/2)+i) for i in range(0, round(CARNUM/2))]  for j in range(LANES) ]
+        self.traffic = [ [Cars.Car(GRIDLEN, j, j*round(CARNUM/LANES)+i) for i in range(0, round(CARNUM/LANES))]  for j in range(LANES) ]
         #self.traffic = [Cars.Car(GRIDLEN, 0) for i in range(0, CARNUM)]
         # ułożenie samochodów na siatce rosnąco względem posX
         for i in range (LANES):
@@ -54,7 +54,7 @@ class Model:
         # self.line1 = self.ax.plot(self.x, grd[1], marker='.', linestyle='', color='b')[0]
 
         self.lines = [self.ax.plot(self.x, grd[i], marker='.', linestyle='', color='b')[0] for i in range(LANES)]
-        self.lines.append(self.ax.plot(self.x, grd[2], marker='.', linestyle='', color='r')[0])
+        self.lines.append(self.ax.plot(self.x, grd[LANES], marker='.', linestyle='', color='r')[0])
 
 
         self.ani = animation.FuncAnimation(
@@ -76,7 +76,7 @@ class Model:
         for j,lane in enumerate(self.traffic):
             for car in lane:
                 if car.id in self.highlightID:
-                    grid[2][car.posX - 1] = car.posY
+                    grid[LANES][car.posX - 1] = car.posY
                 else:
                     grid[j][car.posX - 1] = car.posY
             # grid[0][car.posX - 1] = car.posY
