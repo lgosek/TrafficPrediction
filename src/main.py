@@ -10,14 +10,14 @@ GRIDLEN = 150
 #Czas symulacji
 TIME = 500
 #Liczba samochodów
-CARNUM = 40
+CARNUM = 20
 #Liczba pasów ruchu
-LANES = 1
+LANES = 3
 #Maksymalna prędkość
 MAXVEL = 5
 
 #liczba wyroznionych samochodow
-HIGHLIGHTED = 1;
+HIGHLIGHTED = 10;
 
 
 
@@ -33,7 +33,7 @@ class Model:
         #numRight = round(random.random()*CARNUM)
         # traffic[0] - prawy pas, traffic[1] - lewy pas
         #self.traffic = [[Cars.Car(GRIDLEN, 0) for i in range(0, numRight)], [Cars.Car(GRIDLEN, 1) for i in range(0, CARNUM-numRight)]]
-        self.traffic = [ [Cars.Car(GRIDLEN, j, j*round(CARNUM/LANES)+i) for i in range(0, round(CARNUM/LANES))]  for j in range(LANES) ]
+        self.traffic = [ [Cars.Car(GRIDLEN, j, j*CARNUM+i) for i in range(0, CARNUM)]  for j in range(LANES) ]
         #self.traffic = [Cars.Car(GRIDLEN, 0) for i in range(0, CARNUM)]
         # ułożenie samochodów na siatce rosnąco względem posX
         for i in range (LANES):
@@ -45,7 +45,7 @@ class Model:
         self.fig, self.ax = plt.subplots()
         self.x = np.arange(0, GRIDLEN, 1)
 
-        self.highlightID = random.sample(range(0, CARNUM), HIGHLIGHTED)
+        self.highlightID = random.sample(range(0, CARNUM*LANES), HIGHLIGHTED)
         grd = self.printGrid()
 
 
