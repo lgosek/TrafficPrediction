@@ -9,7 +9,7 @@ def OrderCars (car):
     return car.posX
 
 class Model:
-    def __init__(self, X, Y, gridLen, carNum, lanes, maxVel):
+    def __init__(self, X, Y, gridLen, carNum, lanes, maxVel, direction):
         #stałe
         self.ModelX = X
         self.ModelY = Y
@@ -21,6 +21,8 @@ class Model:
         self.LANES = lanes
         # Maksymalna prędkość
         self.MAXVEL = maxVel
+        # Kierunek - 1 w prawo, 2 - w lewo, 3 - w górę, 4 - w dół
+        self.direction = direction
 
         # generowanie samochodów
         self.traffic = [[Cars.Car(self.GRIDLEN, j, j * self.CARNUM + i, self.MAXVEL) for i in range(0, self.CARNUM)] for j in range(self.LANES)]
@@ -28,8 +30,6 @@ class Model:
         # ułożenie samochodów na siatce rosnąco względem posX
         for i in range (self.LANES):
             self.traffic[i].sort(key=OrderCars)
-
-        # grd = self.printGrid()
 
     def updateCarVel(self, car, pred):
         if car.posX == pred.posX:
@@ -39,13 +39,6 @@ class Model:
         vtemp = min(car.currentVel +1, dist, car.maxVel)
 
         car.currentVel = max(vtemp-1, 0) if random.random()<p else vtemp
-
-    # def printGrid(self):
-    #     grid = [[None for i in range(0, self.GRIDLEN)] for j in range(self.LANES)]
-    #     for j,lane in enumerate(self.traffic):
-    #         for car in lane:
-    #             grid[j][car.posX - 1] = car.posY
-    #     return grid
 
     def findNearest(self, destLane, posX):
         if not self.traffic[destLane]:
@@ -68,10 +61,7 @@ class Model:
         back,front = self.findNearest(destLane,car.posX)
         if back==False and front == False:
             print("No neighbour")
-            # if car.posY == 0:
-            #     return 1
-            # else:
-            #     return -1
+
             gapo = self.MAXVEL +1
             gapob = self.MAXVEL +1
         else:
@@ -100,7 +90,6 @@ class Model:
             for car in lane:
                 print(car.posX," ",car.posY)
 
-
         newTraffic = [[] for j in range(self.LANES)]
         #obsługa przejść między pasami
         for i in range(self.LANES):
@@ -113,23 +102,13 @@ class Model:
 
         for i in range (self.LANES):
             newTraffic[i].sort(key=OrderCars)
-        # newTraffic[0].sort(key=OrderCars)
-        # newTraffic[1].sort(key=OrderCars)
 
         for i in range(self.LANES):
             for j in range(len(newTraffic[i])):
                 self.updateCarVel(newTraffic[i][j], newTraffic[i][(j+1)%len(newTraffic[i])])
-
-        # firstCar = self.traffic[0]
-        # for i in range(CARNUM - 1):
-        #     self.UpdateCarVel(i, self.traffic[i + 1])
-        # self.UpdateCarVel(-1, firstCar)
 
         for lane in newTraffic:
             for e in lane:
                 e.posX = (e.posX + e.currentVel) % self.GRIDLEN
 
         self.traffic = newTraffic
-
-        # return self.printGrid()
-
