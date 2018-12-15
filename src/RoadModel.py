@@ -25,7 +25,7 @@ class Model:
         self.direction = direction
 
         # generowanie samochodów
-        self.traffic = [[Cars.Car(self.GRIDLEN, j, j * self.CARNUM + i, self.MAXVEL) for i in range(0, self.CARNUM)] for j in range(self.LANES)]
+        self.traffic = [[Cars.Car(self.GRIDLEN, j, 0, self.MAXVEL) for i in range(0, self.CARNUM)] for j in range(self.LANES)]
 
         # ułożenie samochodów na siatce rosnąco względem posX
         for i in range (self.LANES):
@@ -56,11 +56,11 @@ class Model:
 
         gap = (pred.posX - car.posX) % self.GRIDLEN - 1
 
-        print ("Car",car.posX,car.posY,sep=' ')
+        # print ("Car",car.posX,car.posY,sep=' ')
 
         back,front = self.findNearest(destLane,car.posX)
         if back==False and front == False:
-            print("No neighbour")
+            # print("No neighbour")
 
             gapo = self.MAXVEL +1
             gapob = self.MAXVEL +1
@@ -68,7 +68,7 @@ class Model:
             if back.posX == car.posX or front.posX == car.posX:
                 return 0
 
-            print("Back",back.posX,"Front",front.posX,sep=' ')
+            # print("Back",back.posX,"Front",front.posX,sep=' ')
             gapo = (front.posX - car.posX) %self.GRIDLEN -1
             gapob = (car.posX - back.posX) %self.GRIDLEN -1
 
@@ -78,37 +78,55 @@ class Model:
             ret =  -1
         else:
             ret =  0
-        print("Returned ", ret)
+        # print("Returned ", ret)
         return ret
 
     #RunSim wykonuje tylko jedną iterację i zwraca
-    def runSim(self):
+    def runSim(self, time):
 
-        print("Iteration start")
-        print("Traffic:")
-        for lane in self.traffic:
-            for car in lane:
-                print(car.posX," ",car.posY)
+        # adding and deleting lights
+        if time%20 == 0 and time>0:
+            if (time//25)%2 == 1 :
+                for i in range(self.LANES):
+                    self.traffic[i].append(Cars.Car(self.GRIDLEN,i,1,0))
+            else:
+                for i in range(self.LANES):
+                    self.traffic[i] = self.traffic[i][:-1]
+
+
+        # print("Iteration start")
+        # print("Traffic:")
+        # for lane in self.traffic:
+        #     for car in lane:
+        #         print(car.posX," ",car.posY)
 
         newTraffic = [[] for j in range(self.LANES)]
         #obsługa przejść między pasami
-        for i in range(self.LANES):
-            for j,car in enumerate(self.traffic[i]):
-                change = self.switchLane(car, self.traffic[i][(j+1)%len(self.traffic[i])], -1)
-                if change == 0:
-                    change = self.switchLane(car, self.traffic[i][(j+1)%len(self.traffic[i])], 1)
-                car.posY = car.posY + change
-                newTraffic[i+change].append(car)
+        if self.LANES > 1:
+            for i in range(self.LANES):
+                for j,car in enumerate(self.traffic[i]):
+                    if car.id ==1:
+                        newTraffic[i].append(car)
+                        continue
+                    change = self.switchLane(car, self.traffic[i][(j+1)%len(self.traffic[i])], -1)
+                    if change == 0:
+                        change = self.switchLane(car, self.traffic[i][(j+1)%len(self.traffic[i])], 1)
+                    car.posY = car.posY + change
+                    newTraffic[i+change].append(car)
 
-        for i in range (self.LANES):
-            newTraffic[i].sort(key=OrderCars)
+            for i in range (self.LANES):
+                newTraffic[i].sort(key=OrderCars)
+        else:
+            newTraffic = self.traffic
 
         for i in range(self.LANES):
             for j in range(len(newTraffic[i])):
-                self.updateCarVel(newTraffic[i][j], newTraffic[i][(j+1)%len(newTraffic[i])])
+                if newTraffic[i][j].id == 0:
+                    self.updateCarVel(newTraffic[i][j], newTraffic[i][(j+1)%len(newTraffic[i])])
 
         for lane in newTraffic:
             for e in lane:
-                e.posX = (e.posX + e.currentVel) % self.GRIDLEN
+                if e.id == 0:
+                    e.posX = (e.posX + e.currentVel) % self.GRIDLEN
 
         self.traffic = newTraffic
