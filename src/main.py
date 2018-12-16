@@ -72,6 +72,7 @@ class Simulation:
 
         ]
 
+        self.background = plt.imread("background.png")
         self.fig, self.ax = plt.subplots()
         self.ani = animation.FuncAnimation(self.fig, self.animate, interval=200, blit=False, save_count=50)
 
@@ -85,7 +86,7 @@ class Simulation:
         plt.xlim((-5, 108))
         plt.ylim((-5, 230))
         plt.gca().set_aspect('equal', adjustable='box')
-
+        self.ax.imshow(self.background,extent=[-5, 108, -5, 230])
         for inter in self.intersections:
             inter.changeRoad()
 
@@ -105,6 +106,8 @@ class Simulation:
                 for car in lane:
                     if car.id == 1:
                         continue
+                    if car.posX > mdl.GRIDLEN:
+                        continue
                     X=Y=-1
                     if mdl.direction == 1:
                         Y = mdl.ModelY + car.posY
@@ -118,7 +121,7 @@ class Simulation:
                     elif mdl.direction == 4:
                         Y = mdl.ModelY - car.posX
                         X = mdl.ModelX + car.posY
-                    self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='b')
+                    self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='y')
 
 
     def start(self):
