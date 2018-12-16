@@ -89,7 +89,7 @@ class Model:
             car.posX = car.posY - self.LANES-1
             car.posY = self.LANES-1
         else:
-            car.posX = 0;
+            car.posX = 0
         if changeDirection:
             car.currentVel = 1
         self.traffic[car.posY].append(car)

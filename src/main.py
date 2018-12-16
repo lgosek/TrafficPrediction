@@ -84,6 +84,7 @@ class Simulation:
         self.ax.cla()
         plt.xlim((-5, 108))
         plt.ylim((-5, 230))
+        plt.gca().set_aspect('equal', adjustable='box')
 
         for inter in self.intersections:
             inter.changeRoad()
