@@ -87,6 +87,7 @@ class Simulation:
         plt.ylim((-5, 230))
         plt.gca().set_aspect('equal', adjustable='box')
         self.ax.imshow(self.background,extent=[-5, 108, -5, 230])
+        plt.axis('off')
         for inter in self.intersections:
             inter.changeRoad()
 
@@ -121,7 +122,7 @@ class Simulation:
                     elif mdl.direction == 4:
                         Y = mdl.ModelY - car.posX
                         X = mdl.ModelX + car.posY
-                    self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='y')
+                    self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='r')
 
 
     def start(self):
