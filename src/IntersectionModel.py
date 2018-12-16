@@ -19,8 +19,20 @@ class Intersection:
                 continue
             else:
                 for car in cars:
+                    choice = choices(self.posibilities, self.probabilities[road])[0]
 
-                    self.outRoads[choices(self.posibilities, self.probabilities[road])[0]].addCar(car)
+                    if road%2 == 0:
+                        if choice == road+1:
+                            changeDirection = False
+                        else:
+                            changeDirection = True
+                    else:
+                        if choice == road-1:
+                            changeDirection = False
+                        else:
+                            changeDirection = True
+
+                    self.outRoads[choice].addCar(car, changeDirection)
 
     def toggleLights(self):
         self.inRoads[self.greenLight].toggleLights()

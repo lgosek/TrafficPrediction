@@ -83,13 +83,14 @@ class Model:
         # print("Returned ", ret)
         return ret
 
-    def addCar(self, car):
+    def addCar(self, car, changeDirection):
         if car.posY > self.LANES-1:
             car.posX = car.posY - self.LANES-1
             car.posY = self.LANES-1
         else:
             car.posX = 0;
-        car.currentVel = 1
+        if changeDirection:
+            car.currentVel = 1
         self.traffic[car.posY].append(car)
 
     def removeCar(self):
