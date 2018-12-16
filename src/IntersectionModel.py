@@ -2,15 +2,18 @@ import RoadModel
 from random import choices
 
 class Intersection:
-    def __init__(self, incoming_roads, outgoing_roads, probability_matrix):
+    def __init__(self, incoming_roads, outgoing_roads, probability_matrix, lights=True):
         self.inRoads = incoming_roads
         self.outRoads = outgoing_roads
         self.probabilities = probability_matrix
         self.posibilities = list(range(0, len(self.outRoads)))
-        self.greenLight = 0
-        for road in self.inRoads:
-            road.toggleLights()
-        self.inRoads[self.greenLight].toggleLights()
+
+        self.lights = lights;
+        if self.lights:
+            self.greenLight = 0
+            for road in self.inRoads:
+                road.toggleLights()
+            self.inRoads[self.greenLight].toggleLights()
 
     def changeRoad(self):
         for road in range(len(self.inRoads)):
@@ -33,8 +36,11 @@ class Intersection:
                             changeDirection = True
 
                     self.outRoads[choice].addCar(car, changeDirection)
+                for oroad in self.outRoads:
+                    oroad.order()
 
     def toggleLights(self):
-        self.inRoads[self.greenLight].toggleLights()
-        self.greenLight = (self.greenLight+1)%len(self.inRoads)
-        self.inRoads[self.greenLight].toggleLights()
+        if self.lights:
+            self.inRoads[self.greenLight].toggleLights()
+            self.greenLight = (self.greenLight+1)%len(self.inRoads)
+            self.inRoads[self.greenLight].toggleLights()

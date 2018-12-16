@@ -8,6 +8,7 @@ PCHANGE = 0.8
 def OrderCars (car):
     return car.posX
 
+
 class Model:
     def __init__(self, X, Y, gridLen, carNum, lanes, maxVel, direction):
         #stałe
@@ -113,7 +114,9 @@ class Model:
 
         self.redLight = not self.redLight
 
-
+    def order(self):
+        for i in range(self.LANES):
+            self.traffic[i].sort(key=OrderCars)
     #RunSim wykonuje tylko jedną iterację i zwraca
     def runSim(self, time):
 
