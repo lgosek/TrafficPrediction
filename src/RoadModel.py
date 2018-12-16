@@ -31,6 +31,8 @@ class Model:
         for i in range (self.LANES):
             self.traffic[i].sort(key=OrderCars)
 
+        self.redLight = False
+
     def updateCarVel(self, car, pred):
         if car.posX == pred.posX:
             dist = self.MAXVEL+1
@@ -81,17 +83,49 @@ class Model:
         # print("Returned ", ret)
         return ret
 
+    def addCar(self, car):
+        if car.posY > self.LANES-1:
+            car.posX = car.posY - self.LANES-1
+            car.posY = self.LANES-1
+        else:
+            car.posX = 0;
+
+        self.traffic[car.posY].append(car)
+
+    def removeCar(self):
+        carsOutsideGrid = []
+        for lane in self.traffic:
+            for car in lane:
+                if car.posX > self.GRIDLEN:
+                    carsOutsideGrid.append(car)
+                    lane.remove(car)
+
+        return carsOutsideGrid
+
+    def toggleLights(self):
+        if self.redLight:
+            for i in range(self.LANES):
+                self.traffic[i] = self.traffic[i][:-1]
+        else:
+            for i in range(self.LANES):
+                self.traffic[i].append(Cars.Car(self.GRIDLEN, i, 1, 0))
+
+        self.redLight = not self.redLight
+
+
     #RunSim wykonuje tylko jedną iterację i zwraca
     def runSim(self, time):
 
         # adding and deleting lights
-        if time%20 == 0 and time>0:
-            if (time//25)%2 == 1 :
-                for i in range(self.LANES):
-                    self.traffic[i].append(Cars.Car(self.GRIDLEN,i,1,0))
-            else:
-                for i in range(self.LANES):
-                    self.traffic[i] = self.traffic[i][:-1]
+        #if time%20 == 0 and time>0:
+        #    if (time//25)%2 == 1 :
+        #        for i in range(self.LANES):
+        #           self.traffic[i].append(Cars.Car(self.GRIDLEN,i,1,0))
+        #    else:
+        #        for i in range(self.LANES):
+        #            self.traffic[i] = self.traffic[i][:-1]
+
+
 
 
         # print("Iteration start")
@@ -127,6 +161,6 @@ class Model:
         for lane in newTraffic:
             for e in lane:
                 if e.id == 0:
-                    e.posX = (e.posX + e.currentVel) % self.GRIDLEN
+                    e.posX = (e.posX + e.currentVel)
 
         self.traffic = newTraffic
