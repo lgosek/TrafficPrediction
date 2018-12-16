@@ -89,7 +89,7 @@ class Model:
             car.posY = self.LANES-1
         else:
             car.posX = 0;
-
+        car.currentVel = 1
         self.traffic[car.posY].append(car)
 
     def removeCar(self):
