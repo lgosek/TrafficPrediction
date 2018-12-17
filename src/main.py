@@ -83,10 +83,10 @@ class Simulation:
     def animate(self,i):
         # print("\t\t"+str(self.time))
         self.ax.cla()
-        plt.xlim((-5, 230))
-        plt.ylim((-5, 108))
+        plt.xlim((-5, 108))
+        plt.ylim((-5, 230))
         plt.gca().set_aspect('equal', adjustable='box')
-        self.ax.imshow(self.background,extent=[-5, 230, -5, 108])
+        self.ax.imshow(self.background,extent=[-5, 108, -5, 230])
         plt.axis('off')
         for inter in self.intersections:
             inter.changeRoad()
@@ -122,7 +122,7 @@ class Simulation:
                     elif mdl.direction == 4:
                         Y = mdl.ModelY - car.posX
                         X = mdl.ModelX + car.posY
-                    self.ax.plot([Y], [X], marker='.', markersize=2, linestyle='', color='r')
+                    self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='r')
 
 
     def start(self):
