@@ -1,0 +1,70 @@
+\begin{thebibliography}{10}
+
+\bibitem{nagel1992cellular}
+Kai Nagel and Michael Schreckenberg.
+\newblock A cellular automaton model for freeway traffic.
+\newblock {\em Journal de physique I}, 2(12):2221--2229, 1992.
+
+\bibitem{chowdhury2000statistical}
+Debashish Chowdhury, Ludger Santen, and Andreas Schadschneider.
+\newblock Statistical physics of vehicular traffic and some related systems.
+\newblock {\em Physics Reports}, 329(4-6):199--329, 2000.
+
+\bibitem{jarai2012earthquake}
+Ferenc J{\'a}rai-Szab{\'o} and Zolt{\'a}n N{\'e}da.
+\newblock Earthquake model describes traffic jams caused by imperfect driving
+  styles.
+\newblock {\em Physica A: Statistical Mechanics and its Applications},
+  391(22):5727--5738, 2012.
+
+\bibitem{persaud2001safety}
+Bhagwant Persaud, Richard Retting, Per Garder, and Dominique Lord.
+\newblock Safety effect of roundabout conversions in the united states:
+  Empirical bayes observational before-after study.
+\newblock {\em Transportation Research Record: Journal of the Transportation
+  Research Board}, (1751):1--8, 2001.
+
+\bibitem{mandavilli2009crash}
+Srinivas Mandavilli, Anne~T McCartt, and Richard~A Retting.
+\newblock Crash patterns and potential engineering countermeasures at maryland
+  roundabouts.
+\newblock {\em Traffic injury prevention}, 10(1):44--50, 2009.
+
+\bibitem{wkasalgorytmy}
+J~W{\k{a}}s.
+\newblock Algorytmy modelowania inteligentnych zachowa{\'n} w zagadnieniach
+  dynamiki pieszych z zastosowaniem niehomogenicznych automat{\'o}w
+  kom{\'o}rkowych, rozprawa doktorska, akademia g{\'o}rniczo-hutnicza,
+  krak{\'o}w 2006.
+
+\bibitem{wkas2004zastosowanie}
+J~W{\k{a}}s and B~Gudowski.
+\newblock Zastosowanie automat{\'o}w kom{\'o}rkowych w symulacji dynamiki
+  pieszych.
+\newblock {\em Automatyka/Akademia G{\'o}rniczo-Hutnicza im. Stanis{\l}awa
+  Staszica w Krakowie}, 8:303--313, 2004.
+
+\bibitem{dudek2005formalizacja}
+E~Dudek-Dyduch and J~W{\k{a}}s.
+\newblock Formalizacja automat{\'o}w kom{\'o}rkowych w zagadnieniach dynamiki
+  pieszych.
+\newblock {\em Automatyka (p{\'o}{\l}rocznik AGH)}, 9(3), 2005.
+
+\bibitem{hartman2004head}
+David Hartman.
+\newblock Head leading algorithm for urban traffic modeling.
+\newblock {\em Positions}, 2:1, 2004.
+
+\bibitem{regragui2018cellular}
+Younes Regragui and Najem Moussa.
+\newblock A cellular automata model for urban traffic with multiple
+  roundabouts.
+\newblock {\em Chinese Journal of Physics}, 2018.
+
+\bibitem{wagner1995traffic}
+Peter Wagner.
+\newblock {\em Traffic simulations using cellular automata: Comparison with
+  reality}.
+\newblock Univ., 1995.
+
+\end{thebibliography}
