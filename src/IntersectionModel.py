@@ -7,6 +7,7 @@ class Intersection:
         self.outRoads = outgoing_roads
         self.probabilities = probability_matrix
         self.posibilities = list(range(0, len(self.outRoads)))
+        self.counter = 0
 
         self.lights = lights;
         if self.lights:
@@ -23,6 +24,7 @@ class Intersection:
             else:
                 for car in cars:
                     choice = choices(self.posibilities, self.probabilities[road])[0]
+                    self.counter = self.counter + 1
 
                     if road%2 == 0:
                         if choice == road+1:
