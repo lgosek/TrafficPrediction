@@ -50,6 +50,13 @@ E~Dudek-Dyduch and J~W{\k{a}}s.
   pieszych.
 \newblock {\em Automatyka (p{\'o}{\l}rocznik AGH)}, 9(3), 2005.
 
+\bibitem{WBGO2009}
+J.~Wąs, R.~Bieliński, B.~Gajewski, and P.~Orzechowski.
+\newblock Problematyka modelowania ruchu miejskiego z wykorzystaniem automatów
+  komórkowych.
+\newblock {\em Automatyka / Akademia Górniczo-Hutnicza im. Stanisława
+  Staszica w Krakowie}, T. 13, z. 3/1:1207--1217, 2009.
+
 \bibitem{hartman2004head}
 David Hartman.
 \newblock Head leading algorithm for urban traffic modeling.
@@ -66,5 +73,10 @@ Peter Wagner.
 \newblock {\em Traffic simulations using cellular automata: Comparison with
   reality}.
 \newblock Univ., 1995.
+
+\bibitem{nagel1995twolane}
+M.~Rickert, K.~Nagel, M.~Schreckenberg, and A.~Latour.
+\newblock Two lane traffic simulations using cellular automata.
+\newblock {\em Physica A}, 2:17, 1995.
 
 \end{thebibliography}
