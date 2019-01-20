@@ -3,13 +3,22 @@ import IntersectionModel
 import EdgeModel
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import time
 
 MODELNUM = 2
 SPACING = 2
 
+
 class Simulation:
     def __init__(self):
         self.time = 0
+        self.minutes = 0
+
+        self.outFile = open("output.txt", "w")
+        # docelowo wersja poniżej, żeby nie nadpisywało danych, na razie zakomentowane żeby nie spamować plikami
+        # filename = time.strftime("%d%b%H%M%S.txt")
+        # self.outFile = open(filename, "w")
+
         self.models = [
             RoadModel.Model(X=5, Y=0, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=1),   #0
             RoadModel.Model(X=97, Y=2, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=2),  #1
@@ -126,24 +135,39 @@ class Simulation:
 
         self.background = plt.imread("background.png")
         self.fig, self.ax = plt.subplots()
+        # bindowanie funkcji wywoływanej przy zamknięciu okna (do zamykania plików etc
+        self.fig.canvas.mpl_connect('close_event', self.handle_close)
         self.ani = animation.FuncAnimation(self.fig, self.animate, interval=200, blit=False, save_count=50)
 
     # def plotBorders(self):
     #     self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='b')
 
+    # funkcja wywoływana przy zamykaniu okna
+    def handle_close(self, evt):
+        # print('Closed Figure!')
+        self.outFile.close()
 
     def animate(self,i):
+        if self.time % 300 == 0 and self.time > 0:
+            print("log file update")
+            self.outFile.write(str(self.minutes) + "\n")
+            for num, inter in enumerate(self.intersections):
+                self.outFile.write(str(num) + ": " + str(inter.counter) + "\n")
+                inter.counter = 0
+            self.outFile.write("--------------\n")
+            self.minutes = self.minutes + 1
+
         # print("\t\t"+str(self.time))
         self.ax.cla()
         plt.xlim((-5, 108))
         plt.ylim((-5, 230))
         plt.gca().set_aspect('equal', adjustable='box')
-        self.ax.imshow(self.background,extent=[-5, 108, -5, 230])
+        self.ax.imshow(self.background, extent=[-5, 108, -5, 230])
         plt.axis('off')
         for edge in self.edges:
             edge.removeCarsOutsideGrid()
             edge.generateNewCar()
-            print(edge.counter)
+            #print(edge.counter)
 
         for inter in self.intersections:
             inter.changeRoad()
@@ -181,12 +205,10 @@ class Simulation:
                         X = mdl.ModelX + car.posY
                     self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='r')
 
-
     def start(self):
         # plt.xlim((0, 230))
         # plt.ylim((-0.5, 230))
         plt.show()
-
 
 
 sim = Simulation()
