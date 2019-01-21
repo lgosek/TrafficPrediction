@@ -214,8 +214,9 @@ class Simulation:
         if self.showPlot:
             plt.show()
         else:
-            while True:
-                self.animate(1);
+            while self.minutes < 5:
+                self.animate(1)
+            self.outFile.close()
 
 
 sim = Simulation(False)
