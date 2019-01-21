@@ -21,32 +21,32 @@ class Simulation:
         # self.outFile = open(filename, "w")
 
         self.models = [
-            RoadModel.Model(X=5, Y=0, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=1),   #0
-            RoadModel.Model(X=97, Y=2, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=2),  #1
+            RoadModel.Model(X=5, Y=0, gridLen=92, carNum=2, lanes=1, maxVel=5, direction=1),   #0
+            RoadModel.Model(X=97, Y=2, gridLen=92, carNum=1, lanes=1, maxVel=5, direction=2),  #1
 
-            RoadModel.Model(X=102, Y=3, gridLen=52, carNum=0, lanes=2, maxVel=5, direction=3), #2
-            RoadModel.Model(X=98, Y=55, gridLen=52, carNum=0, lanes=2, maxVel=5, direction=4), #3
+            RoadModel.Model(X=102, Y=3, gridLen=52, carNum=4, lanes=2, maxVel=5, direction=3), #2
+            RoadModel.Model(X=98, Y=55, gridLen=52, carNum=2, lanes=2, maxVel=5, direction=4), #3
 
             RoadModel.Model(X=4, Y=3, gridLen=52, carNum=0, lanes=2, maxVel=5, direction=3),   #4
             RoadModel.Model(X=0, Y=55, gridLen=52, carNum=0, lanes=2, maxVel=5, direction=4),  #5
 
-            RoadModel.Model(X=5, Y=56, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=1),  #6
+            RoadModel.Model(X=5, Y=56, gridLen=92, carNum=4, lanes=1, maxVel=5, direction=1),  #6
             RoadModel.Model(X=97, Y=58, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=2), #7
 
             RoadModel.Model(X=102, Y=59, gridLen=108, carNum=0, lanes=2, maxVel=5, direction=3), #8
-            RoadModel.Model(X=98, Y=167, gridLen=108, carNum=0, lanes=2, maxVel=5, direction=4), #9
+            RoadModel.Model(X=98, Y=167, gridLen=108, carNum=1, lanes=2, maxVel=5, direction=4), #9
 
-            RoadModel.Model(X=4, Y=59, gridLen=108, carNum=0, lanes=2, maxVel=5, direction=3),   #10
+            RoadModel.Model(X=4, Y=59, gridLen=108, carNum=3, lanes=2, maxVel=5, direction=3),   #10
             RoadModel.Model(X=0, Y=167, gridLen=108, carNum=0, lanes=2, maxVel=5, direction=4),  #11
 
             RoadModel.Model(X=5, Y=168, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=1),  # 12
-            RoadModel.Model(X=97, Y=170, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=2), # 13
+            RoadModel.Model(X=97, Y=170, gridLen=92, carNum=2, lanes=1, maxVel=5, direction=2), # 13
 
             RoadModel.Model(X=102, Y=171, gridLen=52, carNum=0, lanes=2, maxVel=5, direction=3),  # 14
             RoadModel.Model(X=98, Y=223, gridLen=52, carNum=0, lanes=2, maxVel=5, direction=4),  # 15
 
             RoadModel.Model(X=4, Y=171, gridLen=52, carNum=0, lanes=2, maxVel=5, direction=3),    # 16
-            RoadModel.Model(X=0, Y=223, gridLen=52, carNum=0, lanes=2, maxVel=5, direction=4),   # 17
+            RoadModel.Model(X=0, Y=223, gridLen=52, carNum=2, lanes=2, maxVel=5, direction=4),   # 17
 
             RoadModel.Model(X=5, Y=224, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=1),  # 18
             RoadModel.Model(X=97, Y=226, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=2)  # 19
@@ -250,6 +250,6 @@ class Simulation:
             self.outFile.close()
 
 
-sim = Simulation(False)
+sim = Simulation(True)
 sim.start()
 
