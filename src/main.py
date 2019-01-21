@@ -113,25 +113,50 @@ class Simulation:
                                            [[0, 0.6, 0.2, 0.2], [0.6, 0, 0.2, 0.2], [0.2, 0.2, 0, 0.6], [0.2, 0.2, 0.6, 0]]),  # 5
             IntersectionModel.Intersection([self.models[16], self.edgeRoads[16], self.models[19], self.edgeRoads[18]],
                                            [self.models[17], self.edgeRoads[17], self.models[18], self.edgeRoads[19]],
-                                           [[0, 0.6, 0.2, 0.2], [0.6, 0, 0.2, 0.2], [0.2, 0.2, 0, 0.6], [0.2, 0.2, 0.6, 0]]),  # 6
+                                           [[0, 0.7, 0, 0.3], [0.7, 0, 0, 0.3], [0.2, 0.2, 0, 0.6], [0.5, 0.5, 0, 0]]),  # 6
             IntersectionModel.Intersection([self.models[14], self.edgeRoads[14], self.models[18], self.edgeRoads[12]],
                                            [self.models[15], self.edgeRoads[15], self.models[19], self.edgeRoads[13]],
-                                           [[0, 0.6, 0.2, 0.2], [0.6, 0, 0.2, 0.2], [0.2, 0.2, 0, 0.6], [0.2, 0.2, 0.6, 0]]),  # 7
+                                           [[0, 0.7, 0.3, 0], [0.7, 0, 0.3, 0], [0.5, 0.5, 0, 0], [0.2, 0.2, 0.6, 0]]),  # 7
+        ]
+        self.probabilities = [
+            [0.003, 0.003, 0.003, 0.003, 0.003], #  0
+            [0.06, 0.03, 0.029, 0.054, 0.037],  # 1
+            [0.008, 0.046, 0.039, 0.023, 0.038],  # 2
+            [0.003, 0, 0.007, 0.003, 0.007],  # 3
+            [0.005, 0.005, 0.005, 0.005, 0.005],  # 4
+            [0.007, 0.007, 0.008, 0.005, 0.005],  # 5
+            [0.057, 0.05, 0.05, 0.077, 0.043],  # 6
+            [0.037, 0.041, 0.039, 0.025, 0.047],  # 7
+            [0.003, 0.017, 0.014, 0.011, 0.013],  # 8
+            [0.021, 0.013, 0.009, 0.035, 0.017],  # 9
+            [0.07, 0.01, 0.08, 0.07, 0.027],  # 10
+            [0.01, 0.01, 0.01, 0.01, 0.01],  # 11
+        ]
+        self.expectedOutcome = [
+            [24, 19, 24, 28, 17],  # 0
+            [18, 26, 23, 13, 22],  # 1
+            [0, 0, 0, 0, 0],  # 2
+            [14, 16, 12, 7, 17],  # 3
+            [58, 31, 62, 44, 24],  # 4
+            [43, 30, 37, 31, 34],  # 5
+            [7, 13, 13, 4, 12],  # 6
+            [20, 25, 24, 35, 20],  # 7
+
         ]
 
         self.edges = [
-            EdgeModel.Edge(self.edgeRoads[1], self.edgeRoads[0], 0.1),  # 0
-            EdgeModel.Edge(self.edgeRoads[3], self.edgeRoads[2], 0.1),  # 1
-            EdgeModel.Edge(self.edgeRoads[5], self.edgeRoads[4], 0.1),  # 2
-            EdgeModel.Edge(self.edgeRoads[7], self.edgeRoads[6], 0.1),  # 3
-            EdgeModel.Edge(self.edgeRoads[9], self.edgeRoads[8], 0.1),  # 4
-            EdgeModel.Edge(self.edgeRoads[11], self.edgeRoads[10], 0.1),  # 5
-            EdgeModel.Edge(self.edgeRoads[13], self.edgeRoads[12], 0.1),  # 6
-            EdgeModel.Edge(self.edgeRoads[15], self.edgeRoads[14], 0.1),  # 7
-            EdgeModel.Edge(self.edgeRoads[17], self.edgeRoads[16], 0.1),  # 8
-            EdgeModel.Edge(self.edgeRoads[19], self.edgeRoads[18], 0.1),  # 9
-            EdgeModel.Edge(self.edgeRoads[21], self.edgeRoads[20], 0.1),  # 10
-            EdgeModel.Edge(self.edgeRoads[23], self.edgeRoads[22], 0.1),  # 11
+            EdgeModel.Edge(self.edgeRoads[1], self.edgeRoads[0], self.probabilities[0][0]),  # 0
+            EdgeModel.Edge(self.edgeRoads[3], self.edgeRoads[2], self.probabilities[1][0]),  # 1
+            EdgeModel.Edge(self.edgeRoads[5], self.edgeRoads[4], self.probabilities[2][0]),  # 2
+            EdgeModel.Edge(self.edgeRoads[7], self.edgeRoads[6], self.probabilities[3][0]),  # 3
+            EdgeModel.Edge(self.edgeRoads[9], self.edgeRoads[8], self.probabilities[4][0]),  # 4
+            EdgeModel.Edge(self.edgeRoads[11], self.edgeRoads[10], self.probabilities[5][0]),  # 5
+            EdgeModel.Edge(self.edgeRoads[13], self.edgeRoads[12], self.probabilities[6][0]),  # 6
+            EdgeModel.Edge(self.edgeRoads[15], self.edgeRoads[14], self.probabilities[7][0]),  # 7
+            EdgeModel.Edge(self.edgeRoads[17], self.edgeRoads[16], self.probabilities[8][0]),  # 8
+            EdgeModel.Edge(self.edgeRoads[19], self.edgeRoads[18], self.probabilities[9][0]),  # 9
+            EdgeModel.Edge(self.edgeRoads[21], self.edgeRoads[20], self.probabilities[10][0]),  # 10
+            EdgeModel.Edge(self.edgeRoads[23], self.edgeRoads[22], self.probabilities[11][0]),  # 11
         ]
 
         self.background = plt.imread("background.png")
@@ -150,13 +175,18 @@ class Simulation:
 
     def animate(self,i):
         if self.time % 300 == 0 and self.time > 0:
+
             print("log file update")
             self.outFile.write(str(self.minutes) + "\n")
             for num, inter in enumerate(self.intersections):
-                self.outFile.write(str(num) + ": " + str(inter.counter) + "\n")
+
+                self.outFile.write(str(num) + ": " + str(inter.counter) + "   " + str(self.expectedOutcome[num][self.minutes])+"\n")
                 inter.counter = 0
             self.outFile.write("--------------\n")
             self.minutes = self.minutes + 1
+            if self.minutes < 5:
+                for edge in range(0,11):
+                    (self.edges[edge]).probability = self.probabilities[edge][self.minutes]
 
         # print("\t\t"+str(self.time))
         if self.showPlot:
