@@ -160,7 +160,7 @@ class Simulation:
             EdgeModel.Edge(self.edgeRoads[23], self.edgeRoads[22], self.probabilities[11][0]),  # 11
         ]
 
-        self.background = plt.imread("background.png")
+        self.background = plt.imread("mapa.png")
         self.fig, self.ax = plt.subplots()
         # bindowanie funkcji wywoływanej przy zamknięciu okna (do zamykania plików etc
         self.fig.canvas.mpl_connect('close_event', self.handle_close)
@@ -237,7 +237,7 @@ class Simulation:
                         Y = mdl.ModelY - car.posX
                         X = mdl.ModelX + car.posY
                     if self.showPlot:
-                        self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='r')
+                        self.ax.plot([X], [Y], marker="D", markersize=2, linestyle='', color='r')
 
     def start(self):
         # plt.xlim((0, 230))
