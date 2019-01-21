@@ -15,7 +15,7 @@ class Simulation:
         self.minutes = 0
         self.showPlot = showPlot
 
-        self.outFile = open("output.txt", "w")
+        self.outFile = open("../Logs/output.txt", "w")
         # docelowo wersja poniżej, żeby nie nadpisywało danych, na razie zakomentowane żeby nie spamować plikami
         # filename = time.strftime("%d%b%H%M%S.txt")
         # self.outFile = open(filename, "w")
@@ -160,7 +160,7 @@ class Simulation:
             EdgeModel.Edge(self.edgeRoads[23], self.edgeRoads[22], self.probabilities[11][0]),  # 11
         ]
 
-        self.background = plt.imread("mapa.png")
+        self.background = plt.imread("../Resources/mapa.png")
         self.fig, self.ax = plt.subplots()
         # bindowanie funkcji wywoływanej przy zamknięciu okna (do zamykania plików etc
         self.fig.canvas.mpl_connect('close_event', self.handle_close)
