@@ -10,9 +10,10 @@ SPACING = 2
 
 
 class Simulation:
-    def __init__(self):
+    def __init__(self, showPlot):
         self.time = 0
         self.minutes = 0
+        self.showPlot = showPlot
 
         self.outFile = open("output.txt", "w")
         # docelowo wersja poniżej, żeby nie nadpisywało danych, na razie zakomentowane żeby nie spamować plikami
@@ -158,12 +159,13 @@ class Simulation:
             self.minutes = self.minutes + 1
 
         # print("\t\t"+str(self.time))
-        self.ax.cla()
-        plt.xlim((-5, 108))
-        plt.ylim((-5, 230))
-        plt.gca().set_aspect('equal', adjustable='box')
-        self.ax.imshow(self.background, extent=[-5, 108, -5, 230])
-        plt.axis('off')
+        if self.showPlot:
+            self.ax.cla()
+            plt.xlim((-5, 108))
+            plt.ylim((-5, 230))
+            plt.gca().set_aspect('equal', adjustable='box')
+            self.ax.imshow(self.background, extent=[-5, 108, -5, 230])
+            plt.axis('off')
         for edge in self.edges:
             edge.removeCarsOutsideGrid()
             edge.generateNewCar()
@@ -203,14 +205,19 @@ class Simulation:
                     elif mdl.direction == 4:
                         Y = mdl.ModelY - car.posX
                         X = mdl.ModelX + car.posY
-                    self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='r')
+                    if self.showPlot:
+                        self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='r')
 
     def start(self):
         # plt.xlim((0, 230))
         # plt.ylim((-0.5, 230))
-        plt.show()
+        if self.showPlot:
+            plt.show()
+        else:
+            while True:
+                self.animate(1);
 
 
-sim = Simulation()
+sim = Simulation(False)
 sim.start()
 
