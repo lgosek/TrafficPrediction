@@ -94,29 +94,29 @@ class Simulation:
         self.intersections = [
             IntersectionModel.Intersection([self.models[1], self.edgeRoads[0], self.models[5], self.edgeRoads[2]],
                                            [self.models[0], self.edgeRoads[1], self.models[4], self.edgeRoads[3]],
-                                           [[0, 0.6, 0.2, 0.2], [0.6, 0, 0.2, 0.2], [0.2, 0.2, 0, 0.6], [0.2, 0.2, 0.6, 0]]),  # 0
+                                           [[0, 0.6, 0, 0.4], [0.4, 0, 0, 0.6], [0.2, 0.2, 0, 0.6], [0.4, 0.6, 0, 0]]),  # 0            CHANGED
 
             IntersectionModel.Intersection([self.models[0], self.edgeRoads[6], self.models[3], self.edgeRoads[4]],
                                            [self.models[1], self.edgeRoads[7], self.models[2], self.edgeRoads[5]],
-                                           [[0, 0.6, 0.2, 0.2], [0.6, 0, 0.2, 0.2], [0.2, 0.2, 0, 0.6], [0.2, 0.2, 0.6, 0]]),  # 1
+                                           [[0, 0.6, 0.2, 0.2], [0.75, 0, 0.2, 0.05], [0.35, 0.15, 0, 0.5], [0.2, 0.5, 0.3, 0]]),  # 1      ZWIEKSZONE DLA MODEL[0]
             IntersectionModel.Intersection([self.models[4], self.models[11], self.models[7], self.edgeRoads[22]],
                                            [self.models[5], self.models[10], self.models[6], self.edgeRoads[23]],
-                                           [[0, 0.6, 0.2, 0.2], [0.6, 0, 0.2, 0.2], [0.2, 0.2, 0, 0.6], [0.2, 0.2, 0.6, 0]]),  # 2
+                                           [[0, 0.6, 0.2, 0.2], [0.6, 0, 0.2, 0.2], [0.3, 0.2, 0, 0.5], [0.2, 0.2, 0.6, 0]]),  # 2
             IntersectionModel.Intersection([self.models[2], self.models[9], self.models[6], self.edgeRoads[8]],
                                            [self.models[3], self.models[8], self.models[7], self.edgeRoads[9]],
-                                           [[0, 0.6, 0.2, 0.2], [0.6, 0, 0.2, 0.2], [0.2, 0.2, 0, 0.6], [0.2, 0.2, 0.6, 0]]),  # 3
+                                           [[0, 0.5, 0, 0.5], [0.7, 0, 0, 0.3], [0.2, 0.2, 0, 0.7], [0.5, 0.5, 0, 0]]),  # 3            CHANGED
             IntersectionModel.Intersection([self.models[10], self.models[17], self.models[13], self.edgeRoads[20]],
                                            [self.models[11], self.models[16], self.models[12], self.edgeRoads[21]],
-                                           [[0, 0.6, 0.2, 0.2], [0.6, 0, 0.2, 0.2], [0.2, 0.2, 0, 0.6], [0.2, 0.2, 0.6, 0]]),  # 4
+                                           [[0, 0.5, 0.2, 0.3], [0, 0, 0.5, 0.5], [0, 0.3, 0, 0.7], [0, 0.2, 0.8, 0]]),  # 4            CHANGED
             IntersectionModel.Intersection([self.models[8], self.models[15], self.models[12], self.edgeRoads[10]],
                                            [self.models[9], self.models[14], self.models[13], self.edgeRoads[11]],
-                                           [[0, 0.6, 0.2, 0.2], [0.6, 0, 0.2, 0.2], [0.2, 0.2, 0, 0.6], [0.2, 0.2, 0.6, 0]]),  # 5
+                                           [[0, 0.05, 0.45, 0.5], [0.3, 0, 0.55, 0.15], [0.25, 0.05, 0, 0.7], [0.25, 0.05, 0.7, 0]]),  # 5
             IntersectionModel.Intersection([self.models[16], self.edgeRoads[16], self.models[19], self.edgeRoads[18]],
                                            [self.models[17], self.edgeRoads[17], self.models[18], self.edgeRoads[19]],
-                                           [[0, 0.7, 0, 0.3], [0.7, 0, 0, 0.3], [0.2, 0.2, 0, 0.6], [0.5, 0.5, 0, 0]]),  # 6
+                                           [[0, 0.7, 0, 0.3], [0.7, 0, 0, 0.3], [0.5, 0.1, 0, 0.4], [0.6, 0.4, 0, 0]]),  # 6
             IntersectionModel.Intersection([self.models[14], self.edgeRoads[14], self.models[18], self.edgeRoads[12]],
                                            [self.models[15], self.edgeRoads[15], self.models[19], self.edgeRoads[13]],
-                                           [[0, 0.7, 0.3, 0], [0.7, 0, 0.3, 0], [0.5, 0.5, 0, 0], [0.2, 0.2, 0.6, 0]]),  # 7
+                                           [[0, 0.95, 0.05, 0], [0.65, 0, 0.05, 0.3], [0.5, 0.5, 0, 0], [0.5, 0.45, 0.05, 0]]),  # 7
         ]
         self.probabilities = [
             [0.003, 0.003, 0.003, 0.003, 0.003], #  0
@@ -130,7 +130,8 @@ class Simulation:
             [0.003, 0.017, 0.014, 0.011, 0.013],  # 8
             [0.021, 0.013, 0.009, 0.035, 0.017],  # 9
             [0.07, 0.01, 0.08, 0.07, 0.027],  # 10
-            [0.01, 0.01, 0.01, 0.01, 0.01],  # 11
+             [0.01, 0.01, 0.01, 0.01, 0.01],  # 11
+            #[0, 0, 0, 0, 0],  # 11
         ]
         self.expectedOutcome = [
             [24, 19, 24, 28, 17],  # 0
@@ -207,7 +208,7 @@ class Simulation:
         for mdl in self.models + self.edgeRoads:
             mdl.runSim(self.time)
 
-        if self.time % 30 == 0 and self.time > 0:
+        if self.time % 25 == 0 and self.time > 0:
             for inter in self.intersections:
                 inter.toggleLights()
 
