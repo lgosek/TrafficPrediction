@@ -120,24 +120,6 @@ class Model:
     #RunSim wykonuje tylko jedną iterację i zwraca
     def runSim(self, time):
 
-        # adding and deleting lights
-        #if time%20 == 0 and time>0:
-        #    if (time//25)%2 == 1 :
-        #        for i in range(self.LANES):
-        #           self.traffic[i].append(Cars.Car(self.GRIDLEN,i,1,0))
-        #    else:
-        #        for i in range(self.LANES):
-        #            self.traffic[i] = self.traffic[i][:-1]
-
-
-
-
-        # print("Iteration start")
-        # print("Traffic:")
-        # for lane in self.traffic:
-        #     for car in lane:
-        #         print(car.posX," ",car.posY)
-
         newTraffic = [[] for j in range(self.LANES)]
         #obsługa przejść między pasami
         if self.LANES > 1:

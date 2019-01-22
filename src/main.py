@@ -3,23 +3,20 @@ import IntersectionModel
 import EdgeModel
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import time
-
-MODELNUM = 2
-SPACING = 2
 
 
 class Simulation:
     def __init__(self, showPlot):
+        # iteration counter
         self.time = 0
+        # simulaiton minutes counter
         self.minutes = 0
+        # interactive or non-interactive mode
         self.showPlot = showPlot
-
+        # log output file handler
         self.outFile = open("../Logs/output.txt", "w")
-        # docelowo wersja poniżej, żeby nie nadpisywało danych, na razie zakomentowane żeby nie spamować plikami
-        # filename = time.strftime("%d%b%H%M%S.txt")
-        # self.outFile = open(filename, "w")
 
+        # array of road models - visible part of simulated roads
         self.models = [
             RoadModel.Model(X=5, Y=0, gridLen=92, carNum=2, lanes=1, maxVel=5, direction=1),   #0
             RoadModel.Model(X=97, Y=2, gridLen=92, carNum=1, lanes=1, maxVel=5, direction=2),  #1
@@ -52,6 +49,8 @@ class Simulation:
             RoadModel.Model(X=97, Y=226, gridLen=92, carNum=0, lanes=1, maxVel=5, direction=2)  # 19
 
         ]
+
+        # edge roads are used for feeding simulation area with cars and as a sink for cars leaving the area
         self.edgeRoads = [
             RoadModel.Model(X=0, Y=0, gridLen=15, carNum=0, lanes=1, maxVel=5, direction=1),  # 0
             RoadModel.Model(X=0, Y=0, gridLen=15, carNum=0, lanes=1, maxVel=5, direction=2),  # 1
@@ -89,8 +88,8 @@ class Simulation:
             RoadModel.Model(X=0, Y=0, gridLen=15, carNum=0, lanes=1, maxVel=5, direction=1),  # 22
             RoadModel.Model(X=0, Y=0, gridLen=15, carNum=0, lanes=1, maxVel=5, direction=1),  # 23
         ]
-            #  przy definiowaniu skrzyżowania podajemy po kolei parami drogi które leżą na przeciwko siebie (zarówno wejściowe i wyjściowe)
-            #  prawdopodobieństwa podajemy tak, że n-ta tablica oznacza prawdopodobieństwa wyboru drugi zjazdowej dla n-tej drogi wjazdowej
+
+        # intersection models - connecting all the roads
         self.intersections = [
             IntersectionModel.Intersection([self.models[1], self.edgeRoads[0], self.models[5], self.edgeRoads[2]],
                                            [self.models[0], self.edgeRoads[1], self.models[4], self.edgeRoads[3]],
@@ -118,6 +117,8 @@ class Simulation:
                                            [self.models[15], self.edgeRoads[15], self.models[19], self.edgeRoads[13]],
                                            [[0, 0.95, 0.05, 0], [0.65, 0, 0.05, 0.3], [0.5, 0.5, 0, 0], [0.5, 0.45, 0.05, 0]]),  # 7
         ]
+
+        # array of probabilities of new car producition for each edge road for each simulation minute. Probabilites are based upon data from real-life sensors
         self.probabilities = [
             [0.005, 0.005, 0.005, 0.005, 0.005], #  0
             [0.06, 0.03, 0.029, 0.054, 0.037],  # 1
@@ -133,6 +134,8 @@ class Simulation:
             # [0.01, 0.01, 0.01, 0.01, 0.01],  # 11
             [0, 0, 0, 0, 0],  # 11
         ]
+
+        # expected values of traffic on intersections - data from real sensors
         self.expectedOutcome = [
             [24, 19, 24, 28, 17],  # 0
             [18, 26, 23, 13, 22],  # 1
@@ -145,6 +148,7 @@ class Simulation:
 
         ]
 
+        # edge models handle generation of new cars ane deletion of ones leaving simulation area
         self.edges = [
             EdgeModel.Edge(self.edgeRoads[1], self.edgeRoads[0], self.probabilities[0][0]),  # 0
             EdgeModel.Edge(self.edgeRoads[3], self.edgeRoads[2], self.probabilities[1][0]),  # 1
@@ -160,62 +164,63 @@ class Simulation:
             EdgeModel.Edge(self.edgeRoads[23], self.edgeRoads[22], self.probabilities[11][0]),  # 11
         ]
 
+        # ploting variables
         self.background = plt.imread("../Resources/mapa.png")
         self.fig, self.ax = plt.subplots()
-        # bindowanie funkcji wywoływanej przy zamknięciu okna (do zamykania plików etc
         self.fig.canvas.mpl_connect('close_event', self.handle_close)
         self.ani = animation.FuncAnimation(self.fig, self.animate, interval=200, blit=False, save_count=50)
 
-    # def plotBorders(self):
-    #     self.ax.plot([X], [Y], marker='.', markersize=2, linestyle='', color='b')
-
-    # funkcja wywoływana przy zamykaniu okna
+    # figure closing handling
     def handle_close(self, evt):
-        # print('Closed Figure!')
         self.outFile.close()
 
+    # main animation loop function
     def animate(self,i):
+        # updating log file and reseting intersection counters every minute
         if self.time % 300 == 0 and self.time > 0:
-
             print("log file update")
             self.outFile.write(str(self.minutes) + "\n")
             for num, inter in enumerate(self.intersections):
-
                 self.outFile.write(str(num) + ": " + str(inter.counter) + "   " + str(self.expectedOutcome[num][self.minutes])+"\n")
                 inter.counter = 0
             self.outFile.write("--------------\n")
             self.minutes = self.minutes + 1
+
+            #updating car generation probabilities every minute
             if self.minutes < 5:
                 for edge in range(0,11):
                     (self.edges[edge]).probability = self.probabilities[edge][self.minutes]
 
-        # print("\t\t"+str(self.time))
         if self.showPlot:
+            # peinting background for animation
             self.ax.cla()
             plt.xlim((-5, 108))
             plt.ylim((-5, 230))
             plt.gca().set_aspect('equal', adjustable='box')
             self.ax.imshow(self.background, extent=[-5, 108, -5, 230])
             plt.axis('off')
+
+        # handling cars leaving simulation area and generation of new cars
         for edge in self.edges:
             edge.removeCarsOutsideGrid()
             edge.generateNewCar()
-            #print(edge.counter)
 
+        # handling cars changing roads on intersections
         for inter in self.intersections:
             inter.changeRoad()
 
+        # executing basic level simulation on every road (lane changes and moving individual cars)
         for mdl in self.models + self.edgeRoads:
             mdl.runSim(self.time)
 
+        # toggling traffic lights
         if self.time % 25 == 0 and self.time > 0:
             for inter in self.intersections:
                 inter.toggleLights()
 
         self.time = self.time + 1
 
-        # self.plotBorders()
-
+        # printing markers for each car
         for mdl in self.models:
             for lane in mdl.traffic:
                 for car in lane:
@@ -223,7 +228,7 @@ class Simulation:
                         continue
                     if car.posX > mdl.GRIDLEN:
                         continue
-                    X=Y=-1
+                    X = Y = -1
                     if mdl.direction == 1:
                         Y = mdl.ModelY + car.posY
                         X = mdl.ModelX + car.posX
@@ -250,6 +255,6 @@ class Simulation:
             self.outFile.close()
 
 
-sim = Simulation(True)
+sim = Simulation(False)
 sim.start()
 

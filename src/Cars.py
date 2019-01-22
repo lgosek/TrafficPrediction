@@ -2,7 +2,12 @@ import random
 
 class Car:
     def __init__(self, gridSize, lane, carNum, MaxVel, position = -1):
-        self.id = carNum    # 0 - normal car, 1 - traffic light
+        # type of car - normal or traffic light (as trafiic lights are implemented as permanently stationary cars)
+        self.id = carNum
+        # posX - vertical position of car
+        # maxVel - max available velocity for that car
+        # curVel - cuurent velocity of the car
+        # posY - number of lane on which the car is currently driving
         if carNum == 1:
             self.posX = gridSize
             self.maxVel = 0
