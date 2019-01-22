@@ -192,7 +192,7 @@ class Simulation:
                     (self.edges[edge]).probability = self.probabilities[edge][self.minutes]
 
         if self.showPlot:
-            # peinting background for animation
+            # displaying background for animation
             self.ax.cla()
             plt.xlim((-5, 108))
             plt.ylim((-5, 230))
@@ -245,8 +245,6 @@ class Simulation:
                         self.ax.plot([X], [Y], marker="D", markersize=2, linestyle='', color='r')
 
     def start(self):
-        # plt.xlim((0, 230))
-        # plt.ylim((-0.5, 230))
         if self.showPlot:
             plt.show()
         else:
